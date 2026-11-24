@@ -4,8 +4,6 @@
 
 这是一个能直接运行的最小自定义生物示例，基于 [Minecraft in GMod | Mobs](https://steamcommunity.com/sharedfiles/filedetails/?id=3774268246)（BlockMob Base，下文简称 BMB）。
 
-整个示例只有两个 Lua 文件，不到 100 行，不带任何模型、贴图和音效。复制、改名，然后改成你自己的生物。
-
 ![余烬僵尸（左）与 BMB 原版僵尸](docs/ember_zombie.jpg)
 
 | | 原版僵尸 | 余烬僵尸 |
@@ -33,7 +31,7 @@
 
 ## BMB 生物的结构
 
-BMB 的生物就是普通的脚本实体（NextBot）。一个生物类主要是一组参数，加上一个很小的"大脑"。真正干活的是 BMB 的基础实体和共用的行为模块，你的生物通过继承拿到全部能力：
+BMB 的生物就是普通的脚本实体（NextBot）。一个生物类主要是一组参数，加上一个很小的状态机。真正干活的是 BMB 的基础实体和共用的行为模块，你的生物通过继承拿到全部能力：
 
 ```
 base_nextbot                     Garry's Mod
@@ -224,9 +222,9 @@ function ENT:CanBMBTarget(target)
 end
 ```
 
-### 自己的大脑
+### 自己的状态机
 
-僵尸的决策写在 `ENT:RunBMBZombieAI()` 里。BMB 先处理完死亡、物理枪抓取、击退等状态，然后在生物的行为协程里反复调用它。重写它，把你自己的判断放在前面，其余情况交回僵尸原来的大脑。
+僵尸的决策写在 `ENT:RunBMBZombieAI()` 里。BMB 先处理完死亡、物理枪抓取、击退等状态，然后在生物的行为协程里反复调用它。重写它，把你自己的判断放在前面，其余情况交回僵尸原来的状态机。
 
 下面这个版本会原地不动，直到有玩家走进 4 格以内，或者它自己受伤：
 
@@ -256,7 +254,7 @@ function ENT:RunBMBZombieAI()
 end
 ```
 
-僵尸自己的大脑用到的积木是 `BMB.Behaviors.SeekTarget`、`BMB.Behaviors.Chase`、`BMB.Behaviors.MeleeAttack` 和 `BMB.Behaviors.Wander`。它们怎么组合，看 `bmb_zombie.lua` 里的 `RunBMBZombieAI`。
+僵尸自己的状态机用到的行为模块是 `BMB.Behaviors.SeekTarget`、`BMB.Behaviors.Chase`、`BMB.Behaviors.MeleeAttack` 和 `BMB.Behaviors.Wander`。它们怎么组合，看 `bmb_zombie.lua` 里的 `RunBMBZombieAI`。
 
 写移动相关的代码时有两条规矩：
 
@@ -306,7 +304,3 @@ end
 - 仓库里带了给创意工坊上传工具用的 `addon.json`，记得改标题。
 - 在你的创意工坊页面把 "Minecraft in GMod | Mobs" 添加为必需物品。
 - 不要打包 BMB 的 Lua、模型、贴图或音效。你的 addon 只需要你自己的文件。
-
-## 测试环境
-
-2026-11-24 使用创意工坊版 BMB 1.0.0 与 MineMod、Garry's Mod x64（版本 2026.11.12）验证，单人模式和单人在线的 listen 服务器都跑过。没有在专用服务器上跑过，也没有第二名玩家连入测试。

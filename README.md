@@ -4,8 +4,6 @@
 
 A minimal, working custom mob for [Minecraft in GMod | Mobs](https://steamcommunity.com/sharedfiles/filedetails/?id=3774268246) (BlockMob Base, "BMB" for short).
 
-It is two Lua files, under 100 lines, with no models, textures or sounds of its own. Copy it, rename it, and turn it into your own mob.
-
 ![Ember Zombie (left) next to a stock BMB zombie](docs/ember_zombie.jpg)
 
 | | Stock zombie | Ember Zombie |
@@ -33,7 +31,7 @@ Everything else is inherited from BMB's zombie: block pathfinding, chasing, mele
 
 ## How a BMB mob is put together
 
-BMB mobs are ordinary scripted entities (NextBots). A mob class is mostly a list of parameters plus a small "brain". The heavy lifting lives in BMB's base entity and its shared behaviour modules, and your mob gets all of it through inheritance:
+BMB mobs are ordinary scripted entities (NextBots). A mob class is mostly a list of parameters plus a small state machine. The heavy lifting lives in BMB's base entity and its shared behaviour modules, and your mob gets all of it through inheritance:
 
 ```
 base_nextbot                     Garry's Mod
@@ -224,9 +222,9 @@ function ENT:CanBMBTarget(target)
 end
 ```
 
-### Its own brain
+### Its own state machine
 
-The zombie's decisions live in `ENT:RunBMBZombieAI()`. BMB calls it over and over from the mob's behaviour coroutine, after it has dealt with death, the physics gun, knockback and similar states. Override it to put your own decisions first, and fall back to the zombie's brain for the rest.
+The zombie's decisions live in `ENT:RunBMBZombieAI()`. BMB calls it over and over from the mob's behaviour coroutine, after it has dealt with death, the physics gun, knockback and similar states. Override it to put your own decisions first, and fall back to the zombie's state machine for the rest.
 
 This version stands still until a player comes within 4 blocks or it gets hurt:
 
@@ -256,7 +254,7 @@ function ENT:RunBMBZombieAI()
 end
 ```
 
-The building blocks the zombie's own brain uses are `BMB.Behaviors.SeekTarget`, `BMB.Behaviors.Chase`, `BMB.Behaviors.MeleeAttack` and `BMB.Behaviors.Wander`. See `RunBMBZombieAI` in `bmb_zombie.lua` for how they fit together.
+The behaviour modules the zombie's own state machine uses are `BMB.Behaviors.SeekTarget`, `BMB.Behaviors.Chase`, `BMB.Behaviors.MeleeAttack` and `BMB.Behaviors.Wander`. See `RunBMBZombieAI` in `bmb_zombie.lua` for how they fit together.
 
 Two rules when you write movement code:
 
@@ -306,7 +304,3 @@ Things to know when you test it:
 - `addon.json` is included for the Workshop uploader. Change the title.
 - On your Workshop page, add "Minecraft in GMod | Mobs" as a required item.
 - Do not bundle BMB's Lua, models, textures or sounds. Your addon only needs your own files.
-
-## Tested with
-
-Checked on 2026-11-24 with the Workshop builds of BMB 1.0.0 and MineMod on Garry's Mod x64 (build 2026.11.12), in single player and on a listen server with one player. It has not been run on a dedicated server or with a second player connected.

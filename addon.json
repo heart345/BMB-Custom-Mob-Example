@@ -1,0 +1,12 @@
+{
+  "title": "BMB Example Mob: Ember Zombie",
+  "type": "npc",
+  "tags": ["fun"],
+  "ignore": [
+    "*.md",
+    "docs/*",
+    ".git/*",
+    ".gitignore",
+    "LICENSE"
+  ]
+}

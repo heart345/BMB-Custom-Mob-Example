@@ -118,6 +118,15 @@ BMB.NaturalSpawn.Register(CLASS, {
 4. 在 autorun 文件里改掉 `CLASS`、显示名、分类、全局表名（`ExampleEmberZombie`）和钩子名。
 5. 重开地图。之后再修改实体文件，保存时会自动重载；自然刷怪的改动需要再重开一次地图才生效。
 
+## 参考文档
+
+和本 README 配套的两份查阅文档：
+
+- **[API 参考](docs/API.zh-CN.md)**：能设置的字段、能定义的钩子、能调用的方法和行为模块，以及自然刷怪、燃烧、状态效果、方块世界和 BMB 触发的游戏钩子。
+- **[ConVar 与控制台命令参考](docs/CONVARS.zh-CN.md)**：全部服务端和客户端设置项、全部控制台命令，附默认值。
+
+两份文档描述的都是 BMB 1.0.0，并用脚本对照它的源码核对过。
+
 ## 常用做法
 
 本节的代码都在游戏里对着创意工坊版 BMB 实际跑过，小节里另有说明的除外。表格里的数字来自 BMB 的源码。
@@ -141,7 +150,7 @@ BMB.NaturalSpawn.Register(CLASS, {
 
 `BMB.BS` 是一个方块的边长（Source 单位，目前是 36.5）。以方块计的距离请写成 `n * BMB.BS`，不要写死单位数。
 
-完整的字段列表在 BMB 里父类实体文件的开头。
+更多字段见 [API 参考](docs/API.zh-CN.md#字段)。完整的字段列表在 BMB 里父类实体文件的开头。
 
 ### 阅读 BMB 的源码
 
@@ -276,7 +285,7 @@ end
 | `spawnChance` | 仅怪物。0 到 1 的额外概率：找到合法位置后是否真的刷出。 |
 | `condition` | 仅怪物。`function(world, cell, position)`，返回 `true`，或者 `false` 加原因。 |
 
-本示例只用到 `category` 和 `weight`。其余选项是从 BMB 源码里整理出来的，没有在这里实际跑过。
+本示例只用到 `category` 和 `weight`。其余选项是从 BMB 源码里整理出来的，没有在这里实际跑过。每个分类的刷新规则和各个失败原因的含义见 [API 参考](docs/API.zh-CN.md#自然刷怪)。
 
 测试时要知道的几件事：
 
@@ -291,6 +300,7 @@ end
 - `bmb_debug_hud 1` 会在每只 BMB 生物头顶显示类名、生命值、状态和移动数据。
 - `bmb_freeze 1` 会把所有 BMB 生物定在原地，方便截图；`bmb_freeze 0` 解除。
 - 你的生物报的 Lua 错误和其它 addon 一样出现在控制台里。
+- 其余的调试手段列在 [ConVar 参考](docs/CONVARS.zh-CN.md#调试)里：追击、近战、跳方块的日志开关，对准星所指生物生效的控制台命令，以及 BMB Debug 工具。
 
 ## 目前的限制
 

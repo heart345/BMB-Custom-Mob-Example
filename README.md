@@ -118,6 +118,15 @@ The registration runs in an `InitPostEntity` hook because addon load order is no
 4. In the autorun file, update `CLASS`, the display name, the category, the global table name (`ExampleEmberZombie`) and the hook name.
 5. Restart the map. After that, edits to the entity file are reloaded when you save it. Changes to natural spawning need another map restart.
 
+## Reference
+
+Two lookup pages go with this README:
+
+- **[API reference](docs/API.md)**: every field you can set, every hook you can define, the methods and behaviour modules you can call, natural spawning, fire, status effects, the block world, and the game hooks BMB fires.
+- **[ConVar and console command reference](docs/CONVARS.md)**: every server and client setting and every console command, with defaults.
+
+Both describe BMB 1.0.0 and were checked by script against its source.
+
 ## Recipes
 
 The code in this section was run in game against the Workshop build of BMB, unless the section says otherwise. The numbers in the tables come from BMB's source.
@@ -141,7 +150,7 @@ The code in this section was run in game against the Workshop build of BMB, unle
 
 `BMB.BS` is the size of one block in Source units (currently 36.5). Write block distances as `n * BMB.BS` instead of hard-coding units.
 
-The full list is at the top of the parent's entity file inside BMB.
+More fields are in the [API reference](docs/API.md#fields). The full list is at the top of the parent's entity file inside BMB.
 
 ### Reading BMB's source
 
@@ -276,7 +285,7 @@ Two rules when you write movement code:
 | `spawnChance` | Monsters only. Extra chance from 0 to 1 that a valid spot is used. |
 | `condition` | Monsters only. `function(world, cell, position)` returning `true`, or `false` and a reason. |
 
-Only `category` and `weight` are used by this example. The other options are listed from BMB's source and were not run here.
+Only `category` and `weight` are used by this example. The other options are listed from BMB's source and were not run here. The [API reference](docs/API.md#natural-spawning) describes the spawn rules of each category and what every failure reason means.
 
 Things to know when you test it:
 
@@ -291,6 +300,7 @@ Things to know when you test it:
 - `bmb_debug_hud 1` draws each BMB mob's class, health, state and movement numbers above it.
 - `bmb_freeze 1` freezes every BMB mob in place, which helps with screenshots. `bmb_freeze 0` releases them.
 - Lua errors from your mob show up in the console like any other addon's.
+- The [ConVar reference](docs/CONVARS.md#debugging) lists the rest: log switches for chasing, melee and block hops, console commands that act on the mob you aim at, and the BMB Debug tool.
 
 ## Limitations
 

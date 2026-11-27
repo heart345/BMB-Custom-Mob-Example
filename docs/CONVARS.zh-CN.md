@@ -45,6 +45,11 @@
 |---|---|---|
 | `bmb_health_scale` | `1` [0.01–100] | 所有 BMB 生物（包括自定义生物）最大生命值的倍率。改动时，活着的生物保持原来的生命百分比。改动会在聊天栏里通知。 |
 | `bmb_minecraft_difficulty` | `2` | Minecraft 难度，供那些在 Garry's Mod 里没有对应概念的规则使用：`0` 和平、`1` 简单、`2` 普通、`3` 困难。旋风人、溺尸、鹦鹉、猪灵和掠夺者会读它。其它 addon 可以用 `BMB.ResolveMinecraftDifficultyId` 钩子按生物覆盖。 |
+| `bmb_damage_taken_scale` | `1` [0–10] | *1.0.0 之后。*玩家、NPC 和其他非 BMB 生物对 BMB 造成的战斗伤害倍率。 |
+| `bmb_damage_dealt_scale` | `1` [0–10] | *1.0.0 之后。*BMB 对玩家、NPC 和其他非 BMB 生物造成的战斗伤害倍率。 |
+| `bmb_damage_internal_scale` | `1` [0–10] | *1.0.0 之后。*两只 BMB 生物互相攻击时的伤害倍率。 |
+
+三个滑条都在 **BMB Mob Attributes**。每次命中按攻击者和受击者选一个倍率。投射物按命中时的攻击归属计算，包括反弹火球。环境伤害和非致死中毒继续走各自的规则。
 
 BMB 的生命值是 Minecraft 生命值 × 3.5，再 × `bmb_health_scale`。生物的 `StartHealth` 字段是乘 `bmb_health_scale` 之前的值。
 

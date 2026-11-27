@@ -45,6 +45,11 @@ Server, saved.
 |---|---|---|
 | `bmb_health_scale` | `1` [0.01–100] | Multiplies every BMB mob's maximum health, custom mobs included. Living mobs keep their health percentage when it changes. Announced in chat when changed. |
 | `bmb_minecraft_difficulty` | `2` | Minecraft difficulty used by the rules that have no Garry's Mod equivalent: `0` peaceful, `1` easy, `2` normal, `3` hard. Read by the breeze, drowned, parrot, piglin and pillager. Another addon can override it per mob with the `BMB.ResolveMinecraftDifficultyId` hook. |
+| `bmb_damage_taken_scale` | `1` [0–10] | *After 1.0.0.* Combat damage from players, NPCs and other non-BMB mobs to a BMB mob. |
+| `bmb_damage_dealt_scale` | `1` [0–10] | *After 1.0.0.* Combat damage from a BMB mob to players, NPCs and other non-BMB mobs. |
+| `bmb_damage_internal_scale` | `1` [0–10] | *After 1.0.0.* Combat damage between two BMB mobs. |
+
+The three damage sliders are in **BMB Mob Attributes**. Each hit uses the one multiplier that matches its attacker and target. Projectiles follow the attacker credited at impact, including deflected fireballs. Environmental damage and nonlethal poison keep their existing rules.
 
 Health in BMB is Minecraft health × 3.5, then × `bmb_health_scale`. A mob's `StartHealth` field is the value before `bmb_health_scale`.
 
